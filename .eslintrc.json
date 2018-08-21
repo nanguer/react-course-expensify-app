@@ -1,0 +1,20 @@
+{
+    "extends": "standard",
+    "parser": "babel-eslint",
+    "rules": {
+        "strict": 0,
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "no-unused-vars": "off",
+        "eol-last": "off",
+        "semi": [2, "always"]
+    },
+    "env": {
+        "jest": true
+    }
+}

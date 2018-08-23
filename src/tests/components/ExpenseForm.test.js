@@ -46,7 +46,7 @@ test('should set note on textarea change', () => {
 });
 
 test('should set amount if valid input', () => {
-    const value = '12.50';
+    const value = '12,50';
     const wrapper = shallow(<ExpenseForm />);
     wrapper
         .find('input')

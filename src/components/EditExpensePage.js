@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ExpenseForm from './ExpenseForm';
-import { editExpense, startRemoveExpense } from '../actions/expenses';
+import { startEditExpense, startRemoveExpense } from '../actions/expenses';
 
 // Refactor EditExpense to a class based component
 // Setup map DisptchToProps (2 things, editExpense, removeExpense)
@@ -18,7 +18,7 @@ import { editExpense, startRemoveExpense } from '../actions/expenses';
 export class EditExpensePage extends React.Component {
     onSubmit = expense => {
         // dispatch the action to edit expense
-        this.props.editExpense(this.props.expense.id, expense);
+        this.props.startEditExpense(this.props.expense.id, expense);
 
         // redirect to the dashboard
         this.props.history.push('/');
@@ -41,7 +41,7 @@ export class EditExpensePage extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch, props) => ({
-    editExpense: (id, expense) => dispatch(editExpense(expense.id, expense)),
+    startEditExpense: (id, expense) => dispatch(startEditExpense(id, expense)),
     startRemoveExpense: data => dispatch(startRemoveExpense(data))
 });
 

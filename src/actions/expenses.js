@@ -2,9 +2,14 @@ import uuid from 'uuid';
 import database from '../firebase/firebase';
 
 // component calls action generator
-// action generator return object
+// action generator returns object
 // component dispatches object
 // redux store changes
+
+// component calls action generator
+// action generator returns function
+// component dispatches function (?)
+// function runs (has the ability to dispatch other action to manipulate de store)
 
 // ADD_EXPENSE
 export const addExpense = expense => ({
@@ -41,9 +46,46 @@ export const removeExpense = ({ id } = {}) => ({
     id
 });
 
+export const startRemoveExpense = ({ id } = {}) => {
+    return dispatch => {
+        return database
+            .ref(`expenses/${id}`)
+            .remove()
+            .then(() => {
+                dispatch(removeExpense({ id }));
+            });
+    };
+};
+
 // EDIT_EXPENSE
 export const editExpense = (id, updates) => ({
     type: 'EDIT_EXPENSE',
     id,
     updates
 });
+
+// SET_EXPENSES
+
+export const setExpenses = expenses => ({
+    type: 'SET_EXPENSES',
+    expenses
+});
+
+export const startSetExpenses = () => {
+    return dispatch => {
+        return database
+            .ref('expenses')
+            .once('value')
+            .then(snapshot => {
+                const expenses = [];
+
+                snapshot.forEach(childSnapshot => {
+                    expenses.push({
+                        id: childSnapshot.key,
+                        ...childSnapshot.val()
+                    });
+                });
+                dispatch(setExpenses(expenses));
+            });
+    };
+};
